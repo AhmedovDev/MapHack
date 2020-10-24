@@ -15,7 +15,6 @@ import ru.ahmedov.maphack.R
 @Suppress("UNREACHABLE_CODE")
 class RestaurantInfoDialogFragment() : BottomSheetDialogFragment() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

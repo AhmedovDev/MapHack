@@ -1,10 +1,12 @@
 package ru.ahmedov.maphack
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.PointF
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -36,6 +38,7 @@ import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.ahmedov.maphack.ui.RestaurantInfoDialogFragment
+import ru.ahmedov.maphack.ui.TaskActivity
 import java.io.IOException
 import java.util.*
 
@@ -158,23 +161,25 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
 
         mapObjects!!.addTapListener(mapObjectTapListener)
         goToAuth.setOnClickListener {
-//            val intent = Intent(applicationContext, InputPhoneActivity::class.java)
-//            startActivity(intent)
+            val intent = Intent(applicationContext, TaskActivity::class.java)
+            startActivity(intent)
         }
         var a = 0
+        var min=0
+        var sec = 0
 
         show_restaurants.setOnClickListener {
             if (a == 0) {
                 textView2.visibility = View.VISIBLE
                 show_restaurants.text = "Завершить"
                 tasks.text = "1 из 5"
-
             }
             if (a == 1) {
                 tasks.text = "2 из 5"
 //                check_work.visibility = View.VISIBLE
                 show_restaurants.text = "Приступить"
-                textView2.text = "Арбат 22 \nДобавить адрес в базу"
+                textView2.text = "Не установленный адрес \nДобавить адрес в базу"
+
             }
             if (a == 2) {
                 setInfoBottomSheetDialogFragment()

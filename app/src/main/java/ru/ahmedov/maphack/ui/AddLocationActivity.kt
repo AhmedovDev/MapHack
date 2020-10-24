@@ -1,5 +1,6 @@
 package ru.ahmedov.maphack.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_add_location.*
@@ -11,7 +12,8 @@ class AddLocationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_location)
 
         save_add_address.setOnClickListener {
-            finish()
+            val intent = Intent(applicationContext, TaskActivity::class.java)
+            startActivity(intent)
         }
     }
 }

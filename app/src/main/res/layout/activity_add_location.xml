@@ -85,7 +85,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/transition_input_auth"
-        android:hint="Арбат 22"
+        android:hint="Указать адрес"
         android:textColorHint="#99000000"
         android:inputType="textPersonName"
         android:padding="15dp"
