@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -80,29 +81,29 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
 
         requestPoints.add(
             RequestPoint(
-                Point(42.984900, 47.507250),
+                Point(42.9851531,47.502561),
                 RequestPointType.WAYPOINT,
                 null
             )
         )
-//        requestPoints.add(
-//            RequestPoint(
-//                Point(42.985500, 47.507950),
-//                RequestPointType.WAYPOINT,
-//                null
-//            )
-//        )
-//        requestPoints.add(
-//            RequestPoint(
-//                Point(42.985700, 47.508550),
-//                RequestPointType.WAYPOINT,
-//                null
-//            )
-//        )
+        requestPoints.add(
+            RequestPoint(
+                Point(42.9852531,47.501561),
+                RequestPointType.WAYPOINT,
+                null
+            )
+        )
+        requestPoints.add(
+            RequestPoint(
+                Point(42.9852831,47.504161),
+                RequestPointType.WAYPOINT,
+                null
+            )
+        )
 
 //        requestPoints.add(
 //            RequestPoint(
-//                Point(42.986200, 47.508550),
+//                Point(42.9830531,47.500561),
 //                RequestPointType.WAYPOINT,
 //                null
 //            ))
@@ -125,36 +126,46 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
         super.onCreate(savedInstanceState)
         mapView.map.isRotateGesturesEnabled = false
         mapView.map.move(
-            CameraPosition(Point(42.984900, 47.507250), 18F, 0F, 0F),
+            CameraPosition(Point(42.9851531,47.502561), 17F, 0F, 0F),
             Animation(
                 Animation.Type.SMOOTH, 4f
             ), null
         )
+
+       var v = intent.getIntExtra("OPTION",1)
+        if(v == 0){
+            tasks.text = "3 из 5"
+//                check_work.visibility = View.VISIBLE
+            show_restaurants.text = "Приступить"
+            textView2.text = "Доставить письмо \nАрбатино 22"
+
+        }
+
         drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
         mapObjects = mapView.map.mapObjects.addCollection()
 
-        var markLocation = mapObjects!!.addPlacemark(Point(42.986200, 47.508550))
+        var markLocation = mapObjects!!.addPlacemark(Point(42.9851531,47.502561))
         markLocation.opacity = 1f
         markLocation.setIcon(ImageProvider.fromResource(this, R.drawable.location_add))
         markLocation.isDraggable = true
 
-        var markPos = mapObjects!!.addPlacemark(Point(42.986200, 47.508850))
+        var markPos = mapObjects!!.addPlacemark(Point(42.9852531,47.501561))
         markPos.opacity = 1f
         markPos.setIcon(ImageProvider.fromResource(this, R.drawable.mail))
         markPos.isDraggable = true
 
 
-        var markPosition = mapObjects!!.addPlacemark(Point(42.985700, 47.508550))
+        var markPosition = mapObjects!!.addPlacemark(Point(42.9852831,47.504161))
         markPosition.opacity = 1f
         markPosition.setIcon(ImageProvider.fromResource(this, R.drawable.pochta))
         markPosition.isDraggable = true
 
-        var markPosition1 = mapObjects!!.addPlacemark(Point(42.984900, 47.507250))
+        var markPosition1 = mapObjects!!.addPlacemark(Point(42.9849531,47.500561))
         markPosition1.opacity = 1f
         markPosition1.setIcon(ImageProvider.fromResource(this, R.drawable.mail))
         markPosition1.isDraggable = true
 
-        var markPosition2 = mapObjects!!.addPlacemark(Point(42.985500, 47.507950))
+        var markPosition2 = mapObjects!!.addPlacemark(Point(42.9856031,47.503261))
         markPosition2.opacity = 1f
         markPosition2.setIcon(ImageProvider.fromResource(this, R.drawable.mail))
         markPosition2.isDraggable = true
@@ -165,7 +176,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
             startActivity(intent)
         }
         var a = 0
-        var min=0
+        var min = 0
         var sec = 0
 
         show_restaurants.setOnClickListener {
@@ -208,7 +219,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
                             p0.position.longitude
                         )
                     )
-
+                    Log.v("userposition", "${p0.position.latitude},${p0.position.longitude}")
                     if (mark != null) {
                         mapObjects?.remove(mark!!)
                     }

@@ -1,5 +1,6 @@
 package ru.ahmedov.maphack.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_task.*
+import ru.ahmedov.maphack.MainActivity
 import ru.ahmedov.maphack.R
 import ru.ahmedov.maphack.data.global.models.Task
 
@@ -19,6 +21,12 @@ class TaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
+
+        go_to_map.setOnClickListener {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            intent.putExtra("OPTION",0)
+            startActivity(intent)
+        }
 
         collapseAnimation("Мои задачи")
         tasks.add(Task("Выполнено","5 мин","Доставить письмо","пр. Р.Гамзатова 64"))
