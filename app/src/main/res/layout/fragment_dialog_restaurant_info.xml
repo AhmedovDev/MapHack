@@ -21,6 +21,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sulakskii_kanon"
+            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/name"
@@ -30,20 +39,24 @@
             android:layout_marginTop="26dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="22dp"
-            android:text="Добавить адрес в базу"
+            android:text="Сулакский каньон"
+            android:background="#7CFFFFFF"
             android:textColor="#000000"
+            android:paddingHorizontal="8dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="4dp"
             android:text="Местоположение"
@@ -53,7 +66,8 @@
             app:layout_constraintBottom_toTopOf="@+id/address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
             android:id="@+id/address"
@@ -62,7 +76,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
-            android:text="Адрес не указан"
+            android:text="Село Дубки"
             android:textColor="#505050"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
@@ -77,7 +91,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="2dp"
-            android:text="Подробнее о задании"
+            android:text="Подробнее о месте"
             android:textAllCaps="true"
             android:textColor="#808080"
             android:textSize="10sp"
@@ -88,12 +102,12 @@
 
         <TextView
             android:id="@+id/review_count"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="4dp"
-            android:text="Определить тип здания"
+            android:text="Каньон является одной из самых известных и посещаемых природных достопримечательностей Дагестана"
             android:textColor="#505050"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/minOrder"
@@ -103,12 +117,12 @@
 
         <TextView
             android:id="@+id/deliveryPriceAndFree"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Добавить место на карту \nв случае его отсутствия"
+            android:text="Сулакского каньона протекает одна из крупнейших и глубоководных рек в Дагестане - Сулак."
             android:textColor="#505050"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/view"
@@ -118,12 +132,12 @@
 
         <TextView
             android:id="@+id/minOrder"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="4dp"
-            android:text="Добавить адрес в базу данных"
+            android:text="Он считается самым глубоким в Европе, его глубина достигает до 1920 метров, а протяженность 53 километра. "
             android:textColor="#505050"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/deliveryPriceAndFree"
@@ -138,7 +152,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
-            android:text="Выполненно заданий 1 из 5"
+            android:text="Локация 1 из 5"
             android:textColor="#505050"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/understand_button"
@@ -155,7 +169,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/select_green_batton"
-            android:text="Добавить информацию"
+            android:text="Оценить"
             style="?android:attr/borderlessButtonStyle"
             android:textAllCaps="false"
             android:textColor="@android:color/white"

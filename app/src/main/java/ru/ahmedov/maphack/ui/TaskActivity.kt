@@ -15,7 +15,7 @@ import ru.ahmedov.maphack.data.global.models.Task
 
 class TaskActivity : AppCompatActivity() {
 
-    var tasks : MutableList<Task> = ArrayList()
+    var tasks: MutableList<Task> = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,25 +24,35 @@ class TaskActivity : AppCompatActivity() {
 
         go_to_map.setOnClickListener {
             val intent = Intent(applicationContext, MainActivity::class.java)
-            intent.putExtra("OPTION",0)
+            intent.putExtra("OPTION", 0)
             startActivity(intent)
         }
 
-        collapseAnimation("Мои задачи")
-        tasks.add(Task("Выполнено","5 мин","Доставить письмо","пр. Р.Гамзатова 64"))
-        tasks.add(Task("Выполнено","17 мин","Добавить местоположение","Адрес не определен"))
-        tasks.add(Task("Не выполнено","0","Доставка письма","Арбатино 22"))
-        tasks.add(Task("Не выполнено","0","Доставка письма","Красноармейская 17"))
-        tasks.add(Task("Не выполнено","0","Доставка посылки","Заманова 8"))
+        collapseAnimation("Расписание")
+        toolbarBasket.setNavigationOnClickListener { finish() }
+        tasks.add(Task("Посетили", "19 марта", "Сулакский каньон", "5.0"))
+        tasks.add(Task("Посетили", "19 марта", "Бархан Сарыкум", "4.7"))
+        tasks.add(Task("Не посетили", "20 марта", "Гуниб: Салтинский водопад", "5.0"))
+        tasks.add(Task("Не посетили", "20 марта", "Чох: Гамсутль - село призрак", "5.0"))
+        tasks.add(Task("Не посетили", "20 мата", "Дербент: Крепость Нарын-Кала", "4.8"))
+        tasks.add(Task("Не посетили", "21 марта", "Самурский лиановый лес", "4.0"))
 
         recyclerView_basket.run {
-            layoutManager = LinearLayoutManager(recyclerView_basket.context)}
+            layoutManager = LinearLayoutManager(recyclerView_basket.context)
+        }
 
-        val adapter = TaskAdapter(tasks,clickListenerdrop = {})
+        val adapter = TaskAdapter(tasks, clickListenerdrop = {})
         recyclerView_basket.adapter = adapter
         adapter.setOnBasketClickListener {
-
+            setInfoBottomSheetDialogFragment()
         }
+    }
+
+    fun setInfoBottomSheetDialogFragment() {
+        val restaurantInfoDialogFragment = RestaurantInfoDialogFragment()
+        restaurantInfoDialogFragment.isCancelable = true
+        restaurantInfoDialogFragment.enterTransition = 1000
+        restaurantInfoDialogFragment.show(supportFragmentManager, restaurantInfoDialogFragment.tag)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

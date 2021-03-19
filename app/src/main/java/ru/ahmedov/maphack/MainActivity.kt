@@ -6,11 +6,12 @@ import android.graphics.PointF
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
     }
 
 
-    private fun submitRequest(userPos: Point) {
+    private fun submitRequest(userPos: Point, secondPoint: Point = Point(43.021886121556236, 46.82819654015869)) {
         val drivingOptions = DrivingOptions()
         val vehicleOptions = VehicleOptions()
         val requestPoints = ArrayList<RequestPoint>()
@@ -78,28 +79,14 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
                 null
             )
         )
+        requestPoints.add(
+            RequestPoint(
+               secondPoint,
+                RequestPointType.WAYPOINT,
+                null
+            )
+        )
 
-        requestPoints.add(
-            RequestPoint(
-                Point(42.9851531,47.502561),
-                RequestPointType.WAYPOINT,
-                null
-            )
-        )
-        requestPoints.add(
-            RequestPoint(
-                Point(42.9852531,47.501561),
-                RequestPointType.WAYPOINT,
-                null
-            )
-        )
-        requestPoints.add(
-            RequestPoint(
-                Point(42.9852831,47.504161),
-                RequestPointType.WAYPOINT,
-                null
-            )
-        )
 
 //        requestPoints.add(
 //            RequestPoint(
@@ -126,14 +113,14 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
         super.onCreate(savedInstanceState)
         mapView.map.isRotateGesturesEnabled = false
         mapView.map.move(
-            CameraPosition(Point(42.9851531,47.502561), 17F, 0F, 0F),
+            CameraPosition(Point(42.9851531, 47.502561), 8F, 0F, 0F),
             Animation(
                 Animation.Type.SMOOTH, 4f
             ), null
         )
 
-       var v = intent.getIntExtra("OPTION",1)
-        if(v == 0){
+        var v = intent.getIntExtra("OPTION", 1)
+        if (v == 0) {
             tasks.text = "3 из 5"
 //                check_work.visibility = View.VISIBLE
             show_restaurants.text = "Приступить"
@@ -144,30 +131,35 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
         drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
         mapObjects = mapView.map.mapObjects.addCollection()
 
-        var markLocation = mapObjects!!.addPlacemark(Point(42.9851531,47.502561))
+        var markLocation = mapObjects!!.addPlacemark(Point(42.386152, 46.962585))
         markLocation.opacity = 1f
-        markLocation.setIcon(ImageProvider.fromResource(this, R.drawable.location_add))
+        markLocation.setIcon(ImageProvider.fromResource(this, R.drawable.woterpad))
         markLocation.isDraggable = true
 
-        var markPos = mapObjects!!.addPlacemark(Point(42.9852531,47.501561))
+        var markPos = mapObjects!!.addPlacemark(Point(43.010346, 47.230085))
         markPos.opacity = 1f
-        markPos.setIcon(ImageProvider.fromResource(this, R.drawable.mail))
+        markPos.setIcon(ImageProvider.fromResource(this, R.drawable.mountain))
         markPos.isDraggable = true
 
 
-        var markPosition = mapObjects!!.addPlacemark(Point(42.9852831,47.504161))
+        var markPosition = mapObjects!!.addPlacemark(Point(41.845392, 48.530369))
         markPosition.opacity = 1f
-        markPosition.setIcon(ImageProvider.fromResource(this, R.drawable.pochta))
+        markPosition.setIcon(ImageProvider.fromResource(this, R.drawable.forest))
         markPosition.isDraggable = true
 
-        var markPosition1 = mapObjects!!.addPlacemark(Point(42.9849531,47.500561))
+        var markPosition1 = mapObjects!!.addPlacemark(Point(42.057669, 48.288776))
         markPosition1.opacity = 1f
-        markPosition1.setIcon(ImageProvider.fromResource(this, R.drawable.mail))
+        markPosition1.setIcon(ImageProvider.fromResource(this, R.drawable.wall))
         markPosition1.isDraggable = true
 
-        var markPosition2 = mapObjects!!.addPlacemark(Point(42.9856031,47.503261))
+        var markPosition3 = mapObjects!!.addPlacemark(Point(42.301965, 46.996226))
+        markPosition1.opacity = 1f
+        markPosition1.setIcon(ImageProvider.fromResource(this, R.drawable.gamsutl))
+        markPosition1.isDraggable = true
+
+        var markPosition2 = mapObjects!!.addPlacemark(Point(43.021886121556236, 46.82819654015869))
         markPosition2.opacity = 1f
-        markPosition2.setIcon(ImageProvider.fromResource(this, R.drawable.mail))
+        markPosition2.setIcon(ImageProvider.fromResource(this, R.drawable.canon))
         markPosition2.isDraggable = true
 
         mapObjects!!.addTapListener(mapObjectTapListener)
@@ -181,22 +173,43 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
 
         show_restaurants.setOnClickListener {
             if (a == 0) {
+                showLocation()
                 textView2.visibility = View.VISIBLE
                 show_restaurants.text = "Завершить"
-                tasks.text = "1 из 5"
+                tasks.text = "1 из 6"
             }
             if (a == 1) {
-                tasks.text = "2 из 5"
+                tasks.text = "2 из 6"
 //                check_work.visibility = View.VISIBLE
-                show_restaurants.text = "Приступить"
-                textView2.text = "Не установленный адрес \nДобавить адрес в базу"
-
+                show_restaurants.text = "Отправиться"
+                textView2.text = "Бархан Сарыкум"
             }
             if (a == 2) {
-                setInfoBottomSheetDialogFragment()
+                submitRequest(Point(43.021886121556236, 46.82819654015869),Point(43.010346, 47.230085))
+                show_restaurants.text = "Завершить"
+            }
+            if(a == 3){
+                textView2.text = "Гуниб"
+                show_restaurants.text = "Отправиться"
             }
             a++
         }
+
+
+
+        show_user_location.setOnClickListener {
+            val theWebPage = WebView(this)
+            theWebPage.settings.javaScriptEnabled = true
+            theWebPage.settings.pluginState = WebSettings.PluginState.ON
+            theWebPage.settings.useWideViewPort = true;
+            setContentView(theWebPage)
+            theWebPage.loadUrl("https://docviewer.yandex.ru/view/1046542638/?page=1&*=LM4xOlq3stJ5%2BWljOLlVUsdTLlR7InVybCI6InlhLWRpc2stcHVibGljOi8vR2lKNWx4YnRRVFRxWlVVMFdMTjc3NGFWNXZyMXhhZ2tmUFoxMkZFRk5KZnJVNnZBMndrckRJUFhscUVXd1REVHEvSjZicG1SeU9Kb25UM1ZvWG5EYWc9PTov0J%2FRgNC10LfQtdC90YLQsNGG0LjRjyAtINCU0LDQs9C10YHRgtCw0L0ucGRmIiwidGl0bGUiOiLQn9GA0LXQt9C10L3RgtCw0YbQuNGPIC0g0JTQsNCz0LXRgdGC0LDQvS5wZGYiLCJub2lmcmFtZSI6ZmFsc2UsInVpZCI6IjEwNDY1NDI2MzgiLCJ0cyI6MTYxNjE2MjQxOTI4MCwieXUiOiIyMzc2MzY3NTcxNTg5NTM2MDA4In0%3D")
+            }
+
+    }
+
+    fun showLocation(){
+        checkSelfLocation()
 
         val mapKit = MapKitFactory.getInstance()
         userLocationLayer = mapKit.createUserLocationLayer(mapView.mapWindow)
@@ -204,86 +217,82 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener, DrivingRou
 //        userLocationLayer!!.isHeadingEnabled = true
         val locationManager = mapKit.createLocationManager()
 
-        show_user_location.setOnClickListener {
-
-            checkSelfLocation()
-
-            userLocationLayer?.setObjectListener(this)
+        userLocationLayer?.setObjectListener(this)
 //            userLocationLayer?.resetAnchor()
-            mapKit.createLocationManager().requestSingleUpdate(object : LocationListener {
-                override fun onLocationUpdated(p0: Location) {
+        mapKit.createLocationManager().requestSingleUpdate(object : LocationListener {
+            override fun onLocationUpdated(p0: Location) {
 
-                    submitRequest(
+                submitRequest(
+                    Point(
+                        p0.position.latitude,
+                        p0.position.longitude
+                    )
+                )
+                Log.v("userposition", "${p0.position.latitude},${p0.position.longitude}")
+                if (mark != null) {
+                    mapObjects?.remove(mark!!)
+                }
+
+                mark =
+                    mapObjects!!.addPlacemark(
                         Point(
                             p0.position.latitude,
                             p0.position.longitude
                         )
                     )
-                    Log.v("userposition", "${p0.position.latitude},${p0.position.longitude}")
-                    if (mark != null) {
-                        mapObjects?.remove(mark!!)
-                    }
-
-                    mark =
-                        mapObjects!!.addPlacemark(
-                            Point(
-                                p0.position.latitude,
-                                p0.position.longitude
-                            )
-                        )
-                    mark?.opacity = 1f
-                    mark?.setIcon(
-                        ImageProvider.fromResource(
-                            applicationContext,
-                            R.drawable.location_png
-                        )
+                mark?.opacity = 1f
+                mark?.setIcon(
+                    ImageProvider.fromResource(
+                        applicationContext,
+                        R.drawable.location_png
                     )
-                    mark?.isDraggable = true
+                )
+                mark?.isDraggable = true
 
-                    mapView.map.move(
-                        CameraPosition(
-                            Point(
-                                p0.position.latitude,
-                                p0.position.longitude
-                            ), 17F, 4F, 0F
-                        )
+                mapView.map.move(
+                    CameraPosition(
+                        Point(
+                            p0.position.latitude,
+                            p0.position.longitude
+                        ), 6F, 4F, 0F
                     )
-                    address_user.setText(getCity(p0.position.latitude, p0.position.longitude))
+                )
+                address_user.setText(getCity(p0.position.latitude, p0.position.longitude))
 
-                }
-
-                override fun onLocationStatusUpdated(p0: LocationStatus) {
-                }
-
-
-            })
-
-
-            clear_address.setOnClickListener {
-                address_user.setText("")
             }
 
-            address_user.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+            override fun onLocationStatusUpdated(p0: LocationStatus) {
+            }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (address_user.text.isEmpty()) {
-                        clear_address.visibility = View.GONE
-                    } else {
-                        clear_address.visibility = View.VISIBLE
-                    }
-                }
 
-                override fun afterTextChanged(s: Editable?) {}
-            })
+        })
+
+
+        clear_address.setOnClickListener {
+            address_user.setText("")
         }
+
+        address_user.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (address_user.text.isEmpty()) {
+                    clear_address.visibility = View.GONE
+                } else {
+                    clear_address.visibility = View.VISIBLE
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
+
 
     private fun getCity(latitude: Double, longitude: Double): String? {
         val geocoder = Geocoder(this, Locale.getDefault())

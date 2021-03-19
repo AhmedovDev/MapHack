@@ -63,7 +63,7 @@ class TaskAdapter(
             containerView.run {
                 order_price.text = task.type
                 order_status.text = task.status
-                if(task.status == "Не выполнено"){
+                if(task.status == "Не посетили"){
                     order_status.setTextColor(Color.parseColor("#000000"))
                     order_status.background =
                         resources.getDrawable(R.drawable.order_status_grey_bg)

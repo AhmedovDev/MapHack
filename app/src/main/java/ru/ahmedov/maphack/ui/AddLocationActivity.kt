@@ -15,5 +15,7 @@ class AddLocationActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, TaskActivity::class.java)
             startActivity(intent)
         }
+
+        toolbar_add_address.setNavigationOnClickListener { finish() }
     }
 }
