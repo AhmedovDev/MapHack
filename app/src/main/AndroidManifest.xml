@@ -13,19 +13,26 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/iconapp"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/iconapp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.TaskActivity"></activity>
-        <activity android:name=".ui.AddLocationActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ui.BottomNavActivity"
+            android:label="@string/title_activity_bottom_nav"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.TaskActivity" />
+        <activity android:name=".ui.AddLocationActivity" />
+        <activity android:name=".MainActivity">
+
         </activity>
     </application>
 
